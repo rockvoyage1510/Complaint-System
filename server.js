@@ -10,6 +10,10 @@ app.use(express.json());
 // MYSQL CONNECTION
 // ======================
 
+app.get('/', (req, res) => {
+  res.send("Server Working");
+});
+
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

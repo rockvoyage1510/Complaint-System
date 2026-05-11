@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Problem Portal — AISSMS IOIT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Decorative background shapes -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+
+  <div id="app">
+
+    <!-- USER LOGIN -->
+    <div class="card" id="userLogin">
+      <div class="card-header">
+        <div class="logo-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="var(--accent)" />
+            <path d="M8 14h12M14 8v12" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <span class="inst-name">AISSMS IOIT</span>
+      </div>
+      <h1 class="card-title">Digital<br><em>Complaint Box</em></h1>
+      <p class="card-sub">Sign in to raise or track an issue</p>
+
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="userUsername" placeholder="your.username">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="userPassword" placeholder="••••••••">
+      </div>
+      <button onclick="userLogin()">
+        Sign In
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="card-links">
+        <a onclick="showPage('trackPage')">Track a complaint</a>
+        <span class="dot">·</span>
+        <a onclick="showPage('adminLogin')">Admin login</a>
+      </div>
+    </div>
+
+    <!-- USER DASHBOARD -->
+    <div class="card wide hidden" id="userDashboard">
+      <div class="card-header">
+        <div class="logo-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="var(--accent)" />
+            <path d="M8 14h12M14 8v12" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <span class="inst-name">AISSMS IOIT</span>
+      </div>
+      <h1 class="card-title">Submit a<br><em>Problem</em></h1>
+      <p class="card-sub">Describe your issue and we'll route it appropriately</p>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select id="mainCategory" onchange="updateSubOptions()">
+          <option value="">Select Category</option>
+          <option value="Academic">Academic</option>
+          <option value="Non-Academic">Non-Academic</option>
+        </select>
+
+        <select id="subCategory">
+          <option value="">Select Problem Type</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="5" placeholder="Describe your problem in detail..."></textarea>
+      </div>
+      <button onclick="submitProblem()">
+        Submit Complaint
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="card-links">
+        <a onclick="logout()">Sign out</a>
+      </div>
+    </div>
+
+    <!-- ADMIN LOGIN -->
+    <div class="card" id="adminLogin" style="display:none;">
+      <div class="card-header">
+        <div class="logo-mark admin-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="var(--accent-admin)" />
+            <circle cx="14" cy="11" r="3.5" stroke="white" stroke-width="2" />
+            <path d="M7 21c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="white" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <span class="inst-name">Admin Portal</span>
+      </div>
+      <h1 class="card-title">Admin<br><em>Access</em></h1>
+      <p class="card-sub">Restricted to authorised personnel only</p>
+
+      <div class="form-group">
+        <label>Admin ID</label>
+        <input type="text" id="adminUsername" placeholder="admin.id">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="adminPassword" placeholder="••••••••">
+      </div>
+      <button class="btn-admin" onclick="adminLogin()">
+        Enter Dashboard
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div class="card-links">
+        <a onclick="showPage('userLogin')">← Back to user login</a>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div class="card wide hidden" id="adminDashboard">
+      <div class="dashboard-header">
+        <div>
+          <div class="card-header" style="margin-bottom:4px">
+            <div class="logo-mark admin-mark">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <rect width="28" height="28" rx="8" fill="var(--accent-admin)" />
+                <circle cx="14" cy="11" r="3.5" stroke="white" stroke-width="2" />
+                <path d="M7 21c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="white" stroke-width="2"
+                  stroke-linecap="round" />
+              </svg>
+            </div>
+            <span class="inst-name">Admin Portal</span>
+          </div>
+          <h1 class="card-title" style="margin-bottom:4px">All<br><em>Complaints</em></h1>
+        </div>
+        <a class="logout-btn" onclick="logout()">Sign out</a>
+      </div>
+
+      <div id="problemList" class="problem-list"></div>
+    </div>
+
+    <!-- TRACK PAGE -->
+    <div class="card hidden" id="trackPage">
+      <div class="card-header">
+        <div class="logo-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="var(--accent)" />
+            <circle cx="14" cy="14" r="5" stroke="white" stroke-width="2" />
+            <path d="M14 9V7M14 21v-2M9 14H7M21 14h-2" stroke="white" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <span class="inst-name">Track Status</span>
+      </div>
+      <h1 class="card-title">Track<br><em>Complaint</em></h1>
+      <p class="card-sub">Enter your tracking ID to check current status</p>
+
+      <div class="form-group">
+        <label>Tracking ID</label>
+        <input type="text" id="trackId" placeholder="e.g. TRK-00421">
+      </div>
+      <button onclick="trackComplaint()">
+        Check Status
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </button>
+
+      <div id="trackResult"></div>
+
+      <div class="card-links" style="margin-top:16px">
+        <a onclick="showPage('userLogin')">← Back to login</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let problems = [];
+
+    function showPage(pageId) {
+      document.querySelectorAll('.card').forEach(div => {
+        div.classList.add('hidden');
+        div.style.display = '';
+      });
+      const target = document.getElementById(pageId);
+      target.classList.remove('hidden');
+      target.style.display = '';
+
+      if (pageId === 'adminDashboard') {
+        loadProblems();
+      }
+    }
+
+    function logout() {
+      showPage('userLogin');
+    }
+
+    function userLogin() {
+      let username = document.getElementById("userUsername").value;
+      let password = document.getElementById("userPassword").value;
+
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, role: 'user' })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) showPage('userDashboard');
+          else alert("Invalid login");
+        });
+    }
+
+    function adminLogin() {
+      let username = document.getElementById("adminUsername").value;
+      let password = document.getElementById("adminPassword").value;
+
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, role: 'admin' })
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            window.currentAdmin = username;
+            showPage('adminDashboard');
+            loadProblems();
+          } else alert("Invalid login");
+        });
+    }
+
+    function submitProblem() {
+      let main = document.getElementById("mainCategory").value;
+      let sub = document.getElementById("subCategory").value;
+      let desc = document.querySelector('#userDashboard textarea').value;
+
+      if (!main) {
+        alert("Please select a category");
+        return;
+      }
+
+      if (!sub) {
+        alert("Please select a problem type");
+        return;
+      }
+
+      if (!desc.trim()) {
+        alert("Please enter description");
+        return;
+      }
+
+      fetch('http://localhost:3000/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ main, sub, desc })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert("Tracking ID: " + data.trackingId);
+        });
+    }
+
+    function loadProblems() {
+      fetch('http://localhost:3000/complaints', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: window.currentAdmin })
+      })
+        .then(res => res.json())
+        .then(data => {
+          let list = document.getElementById('problemList');
+          list.innerHTML = "";
+
+          data.forEach(p => {
+            let div = document.createElement('div');
+            div.className = "problem-card";
+            div.innerHTML = `
+              <div class="problem-card-top">
+                <span class="problem-type ${p.main === 'Academic' ? 'tag-academic' : 'tag-nonacademic'}">${p.main} - ${p.sub}</span>
+                <span class="problem-id">ID: ${p.tracking_id}</span>
+              </div>
+              <p class="problem-desc">${p.description}</p>
+              <select class="status-select" onchange="updateStatus('${p.tracking_id}', this.value)">
+                <option ${p.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                <option ${p.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                <option ${p.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+              </select>
+            `;
+            list.appendChild(div);
+          });
+        });
+    }
+
+    function trackComplaint() {
+      let id = document.getElementById("trackId").value;
+
+      fetch(`http://localhost:3000/track/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          let result = document.getElementById("trackResult");
+
+          if (data.message) {
+            result.innerHTML = `<div class="track-error">No complaint found with that ID.</div>`;
+          } else {
+            const statusClass = data.status === 'Resolved' ? 'status-resolved' : data.status === 'In Progress' ? 'status-inprogress' : 'status-pending';
+            result.innerHTML = `
+              <div class="track-result-card">
+                <div class="track-row"><span class="track-label">Description</span><span>${data.description}</span></div>
+                <div class="track-row"><span class="track-label">Status</span><span class="status-badge ${statusClass}">${data.status}</span></div>
+              </div>
+            `;
+          }
+        });
+    }
+    function updateSubOptions() {
+      let main = document.getElementById("mainCategory").value;
+      let sub = document.getElementById("subCategory");
+
+      sub.innerHTML = '<option value="">Select Problem Type</option>';
+
+      if (main === "Academic") {
+        sub.innerHTML += `
+            <option>Attendance Problem</option>
+            <option>Faculty Related Problem</option>
+            <option>Exam Revaluation</option>
+        `;
+      } else if (main === "Non-Academic") {
+        sub.innerHTML += `
+            <option>Fees Related</option>
+            <option>Scholarship Related</option>
+            <option>College App Issue</option>
+        `;
+      }
+    }
+    function updateStatus(tracking_id, status) {
+      fetch('http://localhost:3000/update-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tracking_id, status })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert("Status updated");
+        });
+    }
+  </script>
+
+</body>
+
+</html>

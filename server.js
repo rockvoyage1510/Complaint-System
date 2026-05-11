@@ -303,6 +303,13 @@ app.post('/update-status', (req, res) => {
     });
 
 });
+// ======================
+// HOME ROUTE
+// ======================
+
+app.get('/', (req, res) => {
+    res.send("Complaint System Server Running");
+});
 
 // ======================
 // START SERVER

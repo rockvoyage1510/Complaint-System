@@ -19,15 +19,12 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
-
     if (err) {
-        console.log(err);
+        console.log("Database connection failed:", err);
     } else {
-        console.log("Connected to MySQL");
+        console.log("MySQL Connected");
     }
-
 });
-
 // ======================
 // TRACKING ID
 // ======================

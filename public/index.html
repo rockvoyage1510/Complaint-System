@@ -221,7 +221,7 @@
       let username = document.getElementById("userUsername").value;
       let password = document.getElementById("userPassword").value;
 
-      fetch('http://localhost:3000/login', {
+      fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, role: 'user' })
@@ -237,7 +237,7 @@
       let username = document.getElementById("adminUsername").value;
       let password = document.getElementById("adminPassword").value;
 
-      fetch('http://localhost:3000/login', {
+      fetch('/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, role: 'admin' })
@@ -272,7 +272,7 @@
         return;
       }
 
-      fetch('http://localhost:3000/submit', {
+      fetch('/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ main, sub, desc })
@@ -284,7 +284,7 @@
     }
 
     function loadProblems() {
-      fetch('http://localhost:3000/complaints', {
+      fetch('/complaints', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: window.currentAdmin })
@@ -317,7 +317,7 @@
     function trackComplaint() {
       let id = document.getElementById("trackId").value;
 
-      fetch(`http://localhost:3000/track/${id}`)
+      fetch(`/track/${id}`)
         .then(res => res.json())
         .then(data => {
           let result = document.getElementById("trackResult");
@@ -356,7 +356,7 @@
       }
     }
     function updateStatus(tracking_id, status) {
-      fetch('http://localhost:3000/update-status', {
+      fetch('/update-status', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tracking_id, status })
